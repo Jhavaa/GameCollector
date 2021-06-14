@@ -6,7 +6,7 @@
  * contain code that should be seen on all pages. (e.g. navigation bar)
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Switch, Route } from 'react-router-dom';
@@ -17,6 +17,9 @@ import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import Header from 'components/Header';
 import Footer from 'components/Footer';
 
+// Imports for Theme Toggling
+import { ThemeProvider } from 'styled-components';
+import { lightTheme, darkTheme } from 'components/Themes';
 import GlobalStyle from '../../global-styles';
 
 const AppWrapper = styled.div`
@@ -28,23 +31,35 @@ const AppWrapper = styled.div`
   flex-direction: column;
 `;
 
+// const [theme, setTheme] = useState('light');
+// const themeToggler = () => {
+//   theme === 'light' ? setTheme('dark') : setTheme('light')
+// }
+
 export default function App() {
+  const [theme, setTheme] = useState('light');
+  const themeToggler = () => {
+    theme === 'light' ? setTheme('dark') : setTheme('light');
+  };
   return (
-    <AppWrapper>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-      >
-        <meta name="description" content="A React.js Boilerplate application" />
-      </Helmet>
-      <Header />
-      <Switch>
-        <Route exact path="/" component={HomePage} />
-        <Route path="/features" component={FeaturePage} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-      <Footer />
-      <GlobalStyle />
-    </AppWrapper>
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <AppWrapper>
+        <button onClick={themeToggler}>Switch Theme</button>
+        <Helmet titleTemplate="%s - GameCollectr" defaultTitle="GameCollectr">
+          <meta
+            name="description"
+            content="A React.js Boilerplate application"
+          />
+        </Helmet>
+        <Header />
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/features" component={FeaturePage} />
+          <Route path="" component={NotFoundPage} />
+        </Switch>
+        <Footer />
+        <GlobalStyle />
+      </AppWrapper>
+    </ThemeProvider>
   );
 }
