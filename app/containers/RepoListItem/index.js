@@ -18,25 +18,27 @@ import RepoLink from './RepoLink';
 import Wrapper from './Wrapper';
 
 export function RepoListItem(props) {
+  console.log(props);
   const { item } = props;
   let nameprefix = '';
 
-  // If the repository is owned by a different person than we got the data for
-  // it's a fork and we should show the name of the owner
-  if (item.owner.login !== props.currentUser) {
-    nameprefix = `${item.owner.login}/`;
-  }
+  // // If the repository is owned by a different person than we got the data for
+  // // it's a fork and we should show the name of the owner
+  // if (item.owner.login !== props.currentUser) {
+  //   nameprefix = `${item.owner.login}/`;
+  // }
 
   // Put together the content of the repository
   const content = (
     <Wrapper>
-      <RepoLink href={item.html_url} target="_blank">
+      {/* <RepoLink href={item.html_url} target="_blank">
         {nameprefix + item.name}
       </RepoLink>
       <IssueLink href={`${item.html_url}/issues`} target="_blank">
         <IssueIcon />
         <FormattedNumber value={item.open_issues_count} />
-      </IssueLink>
+      </IssueLink> */}
+      <p>{item.name} </p>
     </Wrapper>
   );
 

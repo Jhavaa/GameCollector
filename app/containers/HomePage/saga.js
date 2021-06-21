@@ -15,11 +15,20 @@ import { makeSelectUsername } from 'containers/HomePage/selectors';
 export function* getRepos() {
   // Select username from store
   const username = yield select(makeSelectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
-
+  // const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
+  const requestURL = `https://jhavacorsproxy.herokuapp.com/https://api.igdb.com/v4/games`;
+  const options = {
+    method: 'post',
+    headers:
+      ({'Client-ID': '6llto5s67z1ag9f3p4gmbfchrph4jo',
+        'Authorization': 'Bearer l00lzsmqfzgr8o3g45qcr51sdnuudk'
+      }),
+    body: `fields name; where name ~ *"${username}"*;`,
+  };
   try {
     // Call our request helper (see 'utils/request')
-    const repos = yield call(request, requestURL);
+    const repos = yield call(request, requestURL, options);
+    console.log(repos)
     yield put(reposLoaded(repos, username));
   } catch (err) {
     yield put(repoLoadingError(err));
