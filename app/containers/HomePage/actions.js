@@ -15,18 +15,18 @@
  *    }
  */
 
-import { CHANGE_USERNAME } from './constants';
+import { CHANGE_GAMETITLE } from './constants';
 
 /**
  * Changes the input field of the form
  *
- * @param  {string} username The new text of the input field
+ * @param  {string} gameTitle The new text of the input field
  *
- * @return {object} An action object with a type of CHANGE_USERNAME
+ * @return {object} An action object with a type of CHANGE_GAMETITLE
  */
-export function changeUsername(username) {
+export function changeGameTitle(gameTitle) {
   return {
-    type: CHANGE_USERNAME,
-    username,
+    type: CHANGE_GAMETITLE,
+    gameTitle,
   };
 }

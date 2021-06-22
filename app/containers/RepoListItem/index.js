@@ -8,25 +8,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { FormattedNumber } from 'react-intl';
+// import { FormattedNumber } from 'react-intl';
 
-import { makeSelectCurrentUser } from 'containers/App/selectors';
+import { makeSelectCurrentSearch } from 'containers/App/selectors';
 import ListItem from 'components/ListItem';
-import IssueIcon from './IssueIcon';
-import IssueLink from './IssueLink';
-import RepoLink from './RepoLink';
+// import IssueIcon from './IssueIcon';
+// import IssueLink from './IssueLink';
+// import RepoLink from './RepoLink';
 import Wrapper from './Wrapper';
 
 export function RepoListItem(props) {
-  console.log(props);
+  /*
+      I used this console.log command to keep track of what kind of objects we are
+      recieving. You can uncomment it if you wanna see how the objects look in the
+      console.
+  */
+  // console.log(props);
   const { item } = props;
-  let nameprefix = '';
-
-  // // If the repository is owned by a different person than we got the data for
-  // // it's a fork and we should show the name of the owner
-  // if (item.owner.login !== props.currentUser) {
-  //   nameprefix = `${item.owner.login}/`;
-  // }
 
   // Put together the content of the repository
   const content = (
@@ -48,11 +46,11 @@ export function RepoListItem(props) {
 
 RepoListItem.propTypes = {
   item: PropTypes.object,
-  currentUser: PropTypes.string,
+  // currentSearch: PropTypes.string,
 };
 
 export default connect(
   createStructuredSelector({
-    currentUser: makeSelectCurrentUser(),
+    currentSearch: makeSelectCurrentSearch(),
   }),
 )(RepoListItem);
