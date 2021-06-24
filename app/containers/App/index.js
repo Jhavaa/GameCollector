@@ -38,13 +38,17 @@ const AppWrapper = styled.div`
 
 export default function App() {
   const [theme, setTheme] = useState('light');
+  const [textt, buttonText] = useState('Dark Mode')
+
   const themeToggler = () => {
+    textt === 'Dark Mode' ? buttonText('Light Mode') : buttonText('Dark Mode')
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
+  
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <AppWrapper>
-        <button onClick={themeToggler}>Switch Theme</button>
+        <button onClick={themeToggler}>{textt}</button>
         <Helmet titleTemplate="%s - GameCollectr" defaultTitle="GameCollectr">
           <meta
             name="description"
