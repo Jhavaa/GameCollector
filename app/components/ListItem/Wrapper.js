@@ -6,8 +6,9 @@ const Wrapper = styled.li`
   display: flex;
   align-items: center;
   position: relative;
-  border-top: 1px solid #eee;
-
+  // border-top: 1px solid #eee;
+  // background-color:#2EA620;
+  
   &:first-child {
     border-top: none;
   }

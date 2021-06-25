@@ -46,6 +46,12 @@ import saga from './saga';
 
 const key = 'home';
 
+// export const Input = styled.TextInput.attrs({
+//   placeholderTextColor: "red"
+// })`
+//   background-color: "#000";
+// `;
+
 export function HomePage({
   gameTitle,
   loading,
@@ -99,7 +105,7 @@ export function HomePage({
               <Input
                 id="gameTitle"
                 type="text"
-                placeholder="Zelda"
+                placeholder="game title"
                 value={gameTitle}
                 onChange={onChangeGameTitle}
               />

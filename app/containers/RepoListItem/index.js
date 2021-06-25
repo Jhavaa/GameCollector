@@ -41,12 +41,12 @@ export function RepoListItem(props) {
   );
 
   // Render the content into a list item
-  return <ListItem key={`repo-list-item-${item.full_name}`} item={content} />;
+  return <ListItem item={content} />;
 }
 
 RepoListItem.propTypes = {
   item: PropTypes.object,
-  // currentSearch: PropTypes.string,
+  currentSearch: PropTypes.string,
 };
 
 export default connect(

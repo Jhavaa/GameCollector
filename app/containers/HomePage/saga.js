@@ -29,8 +29,10 @@ export function* getRepos() {
       Authorization: 'Bearer l00lzsmqfzgr8o3g45qcr51sdnuudk',
     },
     // In the body we currently are asking to search the DB for a name matching our input.
-    body: `fields name; where name ~ *"${gameTitle}"*;`,
+    body: `fields name; where name ~ *"${gameTitle}"*; limit 20;`,
   };
+
+
   try {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL, options);
@@ -39,11 +41,42 @@ export function* getRepos() {
       recieving. You can uncomment it if you wanna see how the objects look in the
       console.
     */
-    // console.log(repos);
+    // console.log(repo);
     yield put(reposLoaded(repos, gameTitle));
+    // yield put(coverLoaded(cover, gameTitle));
   } catch (err) {
     yield put(repoLoadingError(err));
   }
+
+
+  // const gameID = ;
+
+  // const optionsCover = {
+  //   // a post method is one that will tell the server hosting the API to create objects
+  //   // with the information we asked for.
+  //   method: 'post',
+  //   // These headers are required to gain access to the API. Think of it as Authentication.
+  //   headers: {
+  //     'Client-ID': '6llto5s67z1ag9f3p4gmbfchrph4jo',
+  //     Authorization: 'Bearer l00lzsmqfzgr8o3g45qcr51sdnuudk',
+  //   },
+  //   // In the body we currently are asking to search the DB for a name matching our input.
+  //   body: `fields url; where game = ${gameID};`,
+  // };
+
+//   try {
+//     // Call our request helper (see 'utils/request')
+//     const cover = yield call(request, 'https://jhavacorsproxy.herokuapp.com/https://api.igdb.com/v4/covers', optionsCover);
+//     /*
+//       I used this console.log command to keep track of what kind of objects we are
+//       recieving. You can uncomment it if you wanna see how the objects look in the
+//       console.
+//     */
+//     console.log(cover);
+//     yield put(coverLoaded(cover, gameTitle));
+//   } catch (err) {
+//     yield put(coverLoadedError(err));
+//   }
 }
 
 /**

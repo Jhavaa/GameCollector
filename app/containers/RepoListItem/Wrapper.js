@@ -5,6 +5,7 @@ const Wrapper = styled.div`
   height: 100%;
   display: flex;
   align-items: space-between;
+  // background-color: rgb(255, 122, 89);
 `;
 
 export default Wrapper;
