@@ -38,22 +38,16 @@ const AppWrapper = styled.div`
 
 export default function App() {
 
-  // const homepageProps = {
-  //   loading,
-  //   error,
-  //   repos,
-  // };
-
   const [theme, setTheme] = useState('light');
-  const [textt, buttonText] = useState('Dark Mode')
-  const [ulBgColor, setUlBgColor] = useState('#363537')
+  const [textt, buttonText] = useState('Dark Mode');
+  // const [ulBgColor, setUlBgColor] = useState('#363537');
 
   const themeToggler = () => {
-    textt === 'Dark Mode' ? buttonText('Light Mode') : buttonText('Dark Mode')
+    textt === 'Dark Mode' ? buttonText('Light Mode') : buttonText('Dark Mode');
     theme === 'light' ? setTheme('dark') : setTheme('light');
-    ulBgColor === '#363537' ? setUlBgColor('#999') : setUlBgColor('#363537');
+    // ulBgColor === '#363537' ? setUlBgColor('#999') : setUlBgColor('#363537');
   };
-  
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <AppWrapper>
@@ -67,7 +61,6 @@ export default function App() {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          {/* <Route exact path="/" render={(props) => (<HomePage {...homepageProps} BgColor={ulBgColor} />)} /> */}
           <Route path="/features" component={FeaturePage} />
           <Route path="" component={NotFoundPage} />
         </Switch>

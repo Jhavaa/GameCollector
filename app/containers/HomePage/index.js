@@ -52,6 +52,10 @@ const key = 'home';
 //   background-color: "#000";
 // `;
 
+// const data = {
+//   ulBack: 'background-color:#2EA620',
+// };
+
 export function HomePage({
   gameTitle,
   loading,
@@ -73,6 +77,8 @@ export function HomePage({
     error,
     repos,
   };
+
+  // console.log(ulBack)
 
   return (
     <article>

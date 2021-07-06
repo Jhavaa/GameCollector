@@ -8,6 +8,9 @@ function List(props) {
   const ComponentToRender = props.component;
   let content = <div />;
 
+  // console.log(props.data.ulBack);
+  const ulBack = 'background-color:#2EA620';
+
   // If we have items, render them
   if (props.items) {
     content = props.items.map(item => (
@@ -20,7 +23,7 @@ function List(props) {
 
   return (
     <Wrapper>
-      <Ul>{content}</Ul>
+      <Ul background-color={ulBack}>{content}</Ul>
     </Wrapper>
   );
 }

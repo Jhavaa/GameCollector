@@ -32,7 +32,6 @@ export function* getRepos() {
     body: `fields name; where name ~ *"${gameTitle}"*; limit 20;`,
   };
 
-
   try {
     // Call our request helper (see 'utils/request')
     const repos = yield call(request, requestURL, options);
@@ -47,7 +46,6 @@ export function* getRepos() {
   } catch (err) {
     yield put(repoLoadingError(err));
   }
-
 
   // const gameID = ;
 
@@ -64,19 +62,19 @@ export function* getRepos() {
   //   body: `fields url; where game = ${gameID};`,
   // };
 
-//   try {
-//     // Call our request helper (see 'utils/request')
-//     const cover = yield call(request, 'https://jhavacorsproxy.herokuapp.com/https://api.igdb.com/v4/covers', optionsCover);
-//     /*
-//       I used this console.log command to keep track of what kind of objects we are
-//       recieving. You can uncomment it if you wanna see how the objects look in the
-//       console.
-//     */
-//     console.log(cover);
-//     yield put(coverLoaded(cover, gameTitle));
-//   } catch (err) {
-//     yield put(coverLoadedError(err));
-//   }
+  //   try {
+  //     // Call our request helper (see 'utils/request')
+  //     const cover = yield call(request, 'https://jhavacorsproxy.herokuapp.com/https://api.igdb.com/v4/covers', optionsCover);
+  //     /*
+  //       I used this console.log command to keep track of what kind of objects we are
+  //       recieving. You can uncomment it if you wanna see how the objects look in the
+  //       console.
+  //     */
+  //     console.log(cover);
+  //     yield put(coverLoaded(cover, gameTitle));
+  //   } catch (err) {
+  //     yield put(coverLoadedError(err));
+  //   }
 }
 
 /**
