@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default styled(Link)`
+  text-align: right;
   display: inline-flex;
-  padding: 0.25em 2em;
-  margin: 1em;
+  padding-right: 15px;
+  //margin: 1em;
   text-decoration: none;
-  border-radius: 4px;
+  //border-radius: 4px;
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
   user-select: none;
@@ -15,11 +16,15 @@ export default styled(Link)`
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
   font-size: 16px;
-  border: 2px solid #41addd;
-  color: #41addd;
+  //border: 2px solid #41addd;
+  color: ${({ theme }) => theme.text};
 
   &:active {
     background: #41addd;
     color: #fff;
+  }
+
+  &:hover {
+    //color: #123123;
   }
 `;
