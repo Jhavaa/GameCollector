@@ -19,5 +19,5 @@ export default defineMessages({
   login: {
     id: `${scope}.login`,
     defaultMessage: 'Login',
-  }
+  },
 });

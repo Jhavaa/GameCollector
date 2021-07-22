@@ -4,7 +4,8 @@ import styled from 'styled-components';
 export default styled(Link)`
   text-align: right;
   display: inline-flex;
-  padding-right: 15px;
+  padding-right: 7px;
+  padding-left: 7px;
   //margin: 1em;
   text-decoration: none;
   //border-radius: 4px;

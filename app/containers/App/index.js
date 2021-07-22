@@ -39,7 +39,6 @@ const AppWrapper = styled.div`
 // }
 
 export default function App() {
-
   const [theme, setTheme] = useState('light');
   const [textt, buttonText] = useState('Dark Mode');
   // const [ulBgColor, setUlBgColor] = useState('#363537');
@@ -64,8 +63,8 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/features" component={FeaturePage} />
-          <Route path ="/login" component={LoginPage}/>
-          <Route path ="/register" component={RegisterPage}/>
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
           <Route path="" component={NotFoundPage} />
         </Switch>
         <Footer />
