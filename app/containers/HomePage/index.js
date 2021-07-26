@@ -68,7 +68,7 @@ export function HomePage({
   useInjectSaga({ key, saga });
 
   useEffect(() => {
-    // When initial state gameTitle is not null, submit the form to load repos
+    // When initial state gameTitle is not null on render, submit the form to load repos
     if (gameTitle && gameTitle.trim().length > 0) onSubmitForm();
   }, []);
 

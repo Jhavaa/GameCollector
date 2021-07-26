@@ -11,6 +11,7 @@ import {
   CHANGE_USERNAME,
   CHANGE_PASSWORD,
   CHANGE_RETYPEPASSWORD,
+  FLIP_SUBMITFLAG,
   REGISTER_SUCCESS,
   REGISTER_ERROR,
 } from './constants';
@@ -74,6 +75,13 @@ export function changeRetypePassword(retypePassword) {
   return {
     type: CHANGE_RETYPEPASSWORD,
     retypePassword,
+  };
+}
+
+export function flipSubmitFlag(submitFlag) {
+  return {
+    type: FLIP_SUBMITFLAG,
+    submitFlag,
   };
 }
 

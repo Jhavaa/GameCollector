@@ -11,6 +11,7 @@ import {
   CHANGE_USERNAME,
   CHANGE_PASSWORD,
   CHANGE_RETYPEPASSWORD,
+  FLIP_SUBMITFLAG,
 } from './constants';
 
 export const initialState = {
@@ -18,6 +19,7 @@ export const initialState = {
   username: '',
   password: '',
   retypePassword: '',
+  submitFlag: false,
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -37,6 +39,9 @@ const registerPageReducer = (state = initialState, action) =>
         break;
       case CHANGE_RETYPEPASSWORD:
         draft.retypePassword = action.retypePassword;
+        break;
+      case FLIP_SUBMITFLAG:
+        draft.submitFlag = !draft.submitFlag;
         break;
       case SUBMIT_REG_REQ:
         break;

@@ -4,7 +4,7 @@
  *
  */
 
-import React, { useEffect, memo } from 'react';
+import React, { useEffect, memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
@@ -19,6 +19,7 @@ import {
   makeSelectUsername,
   makeSelectPassword,
   makeSelectRetypePassword,
+  makeSelectSubmitFlag,
 } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
@@ -29,17 +30,21 @@ import {
   changePassword,
   changeRetypePassword,
   submitRegReq,
+  flipSubmitFlag,
 } from './actions';
 
 import Form from './Form';
 import Input from './Input';
 import RegisterButton from './RegisterButton';
+import ErrorMessage from './ErrorMessage';
 
 export function RegisterPage({
   email,
   username,
   password,
   retypePassword,
+  submitFlag,
+  onFlipSubmitFlag,
   onSubmitForm,
   onChangeEmail,
   onChangeUsername,
@@ -49,16 +54,46 @@ export function RegisterPage({
   useInjectReducer({ key: 'registerPage', reducer });
   useInjectSaga({ key: 'registerPage', saga });
 
+  const [message, setMessage] = useState('');
+
   useEffect(() => {
+    // console.log(submitFlag);
     if (
-      username.trim() === '' ||
-      email.trim() === '' ||
-      // name.trim() === '' ||
-      password.trim() === ''
+      submitFlag &&
+      (username.trim() === '' ||
+        email.trim() === '' ||
+        retypePassword.trim() === '' ||
+        password.trim() === '')
     ) {
-      // console.log('All fields are required');
-    } else onSubmitForm();
-  }, []);
+      setMessage('All fields are required');
+    }
+    // else if (
+    //   submitFlag &&
+    //   (username.trim() !== '' ||
+    //     email.trim() !== '' ||
+    //     retypePassword.trim() !== '' ||
+    //     password.trim() !== '')
+    // ) {
+    //   onFlipSubmitFlag();
+    //   setMessage('');
+    //   // onSubmitForm()
+    // }
+  }, [email, username, password, retypePassword, submitFlag]);
+
+  const submitAndFlip = async event => {
+    event.preventDefault();
+    if (submitFlag === false) {
+      await onFlipSubmitFlag();
+    }
+    if (
+      username.trim() !== '' &&
+      email.trim() !== '' &&
+      retypePassword.trim() !== '' &&
+      password.trim() !== ''
+    )
+      setMessage('');
+    onSubmitForm();
+  };
 
   return (
     <div>
@@ -67,7 +102,7 @@ export function RegisterPage({
         <meta name="description" content="Register Page" />
       </Helmet>
 
-      <Form onSubmit={onSubmitForm}>
+      <Form onSubmit={submitAndFlip}>
         <h1>
           <FormattedMessage {...messages.signUpHeader} />
         </h1>
@@ -110,7 +145,8 @@ export function RegisterPage({
 
         <RegisterButton type="submit" value="Register" />
       </Form>
-      <FormattedMessage {...messages.header} />
+      <ErrorMessage> {message} </ErrorMessage>
+      {/* <FormattedMessage {...messages.header} /> */}
     </div>
   );
 }
@@ -121,6 +157,8 @@ RegisterPage.propTypes = {
   username: PropTypes.string,
   password: PropTypes.string,
   retypePassword: PropTypes.string,
+  submitFlag: PropTypes.bool,
+  onFlipSubmitFlag: PropTypes.func,
   onSubmitForm: PropTypes.func,
   onChangeEmail: PropTypes.func,
   onChangeUsername: PropTypes.func,
@@ -134,6 +172,7 @@ const mapStateToProps = createStructuredSelector({
   username: makeSelectUsername(),
   password: makeSelectPassword(),
   retypePassword: makeSelectRetypePassword(),
+  submitFlag: makeSelectSubmitFlag(),
 });
 
 function mapDispatchToProps(dispatch) {
@@ -143,6 +182,7 @@ function mapDispatchToProps(dispatch) {
     onChangePassword: evt => dispatch(changePassword(evt.target.value)),
     onChangeRetypePassword: evt =>
       dispatch(changeRetypePassword(evt.target.value)),
+    onFlipSubmitFlag: () => dispatch(flipSubmitFlag()),
     onSubmitForm: evt => {
       if (evt !== undefined && evt.preventDefault) evt.preventDefault();
       dispatch(submitRegReq());

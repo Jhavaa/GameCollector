@@ -45,6 +45,12 @@ const makeSelectRetypePassword = () =>
     regState => regState.retypePassword,
   );
 
+const makeSelectSubmitFlag = () =>
+  createSelector(
+    selectRegisterPageDomain,
+    regState => regState.submitFlag,
+  );
+
 // export default makeSelectRegisterPage;
 export {
   selectRegisterPageDomain,
@@ -52,4 +58,5 @@ export {
   makeSelectUsername,
   makeSelectPassword,
   makeSelectRetypePassword,
+  makeSelectSubmitFlag,
 };
