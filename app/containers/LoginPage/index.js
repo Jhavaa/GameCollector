@@ -7,15 +7,14 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import messages from './messages';
 import { FormattedMessage } from 'react-intl';
+import messages from './messages';
 
 // import Button from './LoginButton';
 // import Form from './LoginForm'
 // import Input from './LoginInput';
 // import SignUpLink from './LoginLink';
 // import LoginBox from './LoginBox';
-
 
 const LoginBox = styled.div``;
 
@@ -65,8 +64,6 @@ const SignUpLink = styled(Link)`
   }
 `;
 
-
-
 export default function LoginPage() {
   return (
     <LoginBox>
@@ -77,16 +74,18 @@ export default function LoginPage() {
 
       <Form>
         <h1>
-          <FormattedMessage {...messages.loginHeader} />    
+          <FormattedMessage {...messages.loginHeader} />
         </h1>
 
         <label>
           <Input type="text" name="name" placeholder="Username" />
         </label>
-        
+
         <label>
           <Input type="text" name="password" placeholder="Password" />
         </label>
+
+        <input type="submit" value="login" />
       </Form>
 
       <Button>
@@ -96,9 +95,9 @@ export default function LoginPage() {
       <div>
         <p>
           <FormattedMessage {...messages.loginDontHave} />
-            <SignUpLink to="/register"> 
-                <FormattedMessage {...messages.loginSignUp} />
-            </SignUpLink>
+          <SignUpLink to="/register">
+            <FormattedMessage {...messages.loginSignUp} />
+          </SignUpLink>
         </p>
       </div>
     </LoginBox>

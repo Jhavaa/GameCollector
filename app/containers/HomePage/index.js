@@ -78,8 +78,6 @@ export function HomePage({
     repos,
   };
 
-  // console.log(ulBack)
-
   return (
     <article>
       <Helmet>

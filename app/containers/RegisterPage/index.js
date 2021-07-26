@@ -1,104 +1,161 @@
-/*
- * LoginPage
+/**
  *
- * User Login
+ * RegisterPage
+ *
  */
-import React from 'react';
+
+import React, { useEffect, memo } from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import messages from './messages';
 import { FormattedMessage } from 'react-intl';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
 
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import {
+  makeSelectEmail,
+  makeSelectUsername,
+  makeSelectPassword,
+  makeSelectRetypePassword,
+} from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import messages from './messages';
+import {
+  changeEmail,
+  changeUsername,
+  changePassword,
+  changeRetypePassword,
+  submitRegReq,
+} from './actions';
 
-const LoginBox = styled.div``;
+import Form from './Form';
+import Input from './Input';
+import RegisterButton from './RegisterButton';
 
-const Form = styled.form`
-  text-align: left;
-  margin: 0 auto;
-  border-radius: 20em;
-  size: 5em;
-`;
+export function RegisterPage({
+  email,
+  username,
+  password,
+  retypePassword,
+  onSubmitForm,
+  onChangeEmail,
+  onChangeUsername,
+  onChangePassword,
+  onChangeRetypePassword,
+}) {
+  useInjectReducer({ key: 'registerPage', reducer });
+  useInjectSaga({ key: 'registerPage', saga });
 
-const Input = styled.input`
-  color: ${({ theme }) => theme.text};
-  border-radius: 20em;
-  border: none;
-  background-color: ${({ theme }) => theme.input};
-  margin: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 25px;
-  padding-left: 20px;
-  padding-right: 10em;
-  padding-top: 5px;
-  padding-bottom: 5px;
-`;
+  useEffect(() => {
+    if (
+      username.trim() === '' ||
+      email.trim() === '' ||
+      // name.trim() === '' ||
+      password.trim() === ''
+    ) {
+      // console.log('All fields are required');
+    } else onSubmitForm();
+  }, []);
 
-const Button = styled.button`
-  background-color: #b5bbc2;
-  border: none;
-  size: 50px;
-  margin: 10px;
-  border-radius: 20em;
-  padding-right: 50px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 50px;
-  color: black;
-  &:hover {
-    background-color: #868c91;
-    cursor: pointer;
-  }
-`;
-
-const SignUpLink = styled(Link)`
-  text-decoration: none;
-  color: ${({ theme }) => theme.text};
-  &:hover {
-    color: #e6e6e6;
-  }
-`;
-
-
-
-export default function LoginPage() {
   return (
-    <LoginBox>
+    <div>
       <Helmet>
-        <title> Login Page </title>
-        <meta name="description" content="Login Page" />
+        <title>RegisterPage</title>
+        <meta name="description" content="Register Page" />
       </Helmet>
 
-      <Form>
+      <Form onSubmit={onSubmitForm}>
         <h1>
-          <FormattedMessage {...messages.signUpHeader} /> 
+          <FormattedMessage {...messages.signUpHeader} />
         </h1>
-        <label>
-          <Input type="text" name="name" placeholder="Email" />
+        <label htmlFor="email">
+          <Input
+            id="email"
+            type="text"
+            placeholder="email"
+            value={email}
+            onChange={onChangeEmail}
+          />
         </label>
-        <label>
-          <Input type="text" name="name" placeholder="Username" />
+        <label htmlFor="username">
+          <Input
+            id="username"
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={onChangeUsername}
+          />
         </label>
-        <label>
-          <Input type="text" name="password" placeholder="Password" />
+        <label htmlFor="password">
+          <Input
+            id="password"
+            type="text"
+            placeholder="password"
+            value={password}
+            onChange={onChangePassword}
+          />
         </label>
-        <label>
-          <Input type="text" name="password" placeholder="Re-enter Password" />
+        <label htmlFor="retypePassword">
+          <Input
+            id="retypePassword"
+            type="text"
+            placeholder="retypePassword"
+            value={retypePassword}
+            onChange={onChangeRetypePassword}
+          />
         </label>
+
+        <RegisterButton type="submit" value="Register" />
       </Form>
-
-      <Button>
-        <FormattedMessage {...messages.signUpButton} /> 
-      </Button>
-
-      <div>
-        <p>
-          <FormattedMessage {...messages.signUpHave} /> 
-          <SignUpLink to="/login"> 
-            <FormattedMessage {...messages.signUpLogin}/> 
-          </SignUpLink>
-        </p>
-      </div>
-    </LoginBox>
+      <FormattedMessage {...messages.header} />
+    </div>
   );
 }
+
+RegisterPage.propTypes = {
+  // dispatch: PropTypes.func.isRequired,
+  email: PropTypes.string,
+  username: PropTypes.string,
+  password: PropTypes.string,
+  retypePassword: PropTypes.string,
+  onSubmitForm: PropTypes.func,
+  onChangeEmail: PropTypes.func,
+  onChangeUsername: PropTypes.func,
+  onChangePassword: PropTypes.func,
+  onChangeRetypePassword: PropTypes.func,
+};
+
+const mapStateToProps = createStructuredSelector({
+  // registerPage: makeSelectRegisterPage(),
+  email: makeSelectEmail(),
+  username: makeSelectUsername(),
+  password: makeSelectPassword(),
+  retypePassword: makeSelectRetypePassword(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onChangeEmail: evt => dispatch(changeEmail(evt.target.value)),
+    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    onChangePassword: evt => dispatch(changePassword(evt.target.value)),
+    onChangeRetypePassword: evt =>
+      dispatch(changeRetypePassword(evt.target.value)),
+    onSubmitForm: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(submitRegReq());
+    },
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(RegisterPage);

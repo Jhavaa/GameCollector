@@ -86,4 +86,5 @@ export default function* githubData() {
   // It returns task descriptor (just like fork) so we can continue execution
   // It will be cancelled automatically on component unmount
   yield takeLatest(LOAD_REPOS, getRepos);
+  // yield takeLatest(CHANGE_GAMETITLE, getRepos);
 }
