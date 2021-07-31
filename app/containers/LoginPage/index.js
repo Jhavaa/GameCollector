@@ -3,68 +3,70 @@
  *
  * User Login
  */
-import React from 'react';
+import React, { useEffect, memo, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { createStructuredSelector } from 'reselect';
+import styled from 'styled-components';
 
-// import Button from './LoginButton';
-// import Form from './LoginForm'
-// import Input from './LoginInput';
-// import SignUpLink from './LoginLink';
+import { useInjectSaga } from 'utils/injectSaga';
+import { useInjectReducer } from 'utils/injectReducer';
+import messages from './messages';
+import {
+  makeSelectUsername,
+  makeSelectPassword,
+  makeSelectSubmitFlag,
+} from './selectors';
+import reducer from './reducer';
+import saga from './saga';
+import {
+  changeUsername,
+  changePassword,
+  flipSubmitFlag,
+  submitLoginReq,
+} from './actions';
+
+import Button from './Button';
+import Form from './Form';
+import Input from './Input';
+import SignUpLink from './SignUpLink';
 // import LoginBox from './LoginBox';
+import ErrorMessage from '../RegisterPage/ErrorMessage';
 
 const LoginBox = styled.div``;
 
-const Form = styled.form`
-  text-align: left;
-  margin: 0 auto;
-  border-radius: 20em;
-  size: 5em;
-`;
+export function LoginPage({
+  username,
+  password,
+  submitFlag,
+  onChangeUsername,
+  onChangePassword,
+  onFlipSubmitFlag,
+  onSubmitForm,
+}) {
+  useInjectReducer({ key: 'loginPage', reducer });
+  useInjectSaga({ key: 'loginPage', saga });
 
-const Input = styled.input`
-  color: ${({ theme }) => theme.text};
-  border-radius: 20em;
-  border: none;
-  background-color: ${({ theme }) => theme.input};
-  margin: 10px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 25px;
-  padding-left: 20px;
-  padding-right: 10em;
-  padding-top: 5px;
-  padding-bottom: 5px;
-`;
+  const [message, setMessage] = useState('');
 
-const Button = styled.button`
-  background-color: #b5bbc2;
-  border: none;
-  size: 50px;
-  margin: 10px;
-  border-radius: 20em;
-  padding-right: 50px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-  padding-left: 50px;
-  color: black;
-  &:hover {
-    background-color: #868c91;
-    cursor: pointer;
-  }
-`;
+  useEffect(() => {
+    if (submitFlag && (username.trim() === '' || password.trim() === '')) {
+      setMessage('All fields are required');
+    }
+  }, [submitFlag, username, password]);
 
-const SignUpLink = styled(Link)`
-  text-decoration: none;
-  color: ${({ theme }) => theme.text};
-  &:hover {
-    color: #e6e6e6;
-  }
-`;
+  const submitAndFlip = async event => {
+    event.preventDefault();
+    if (submitFlag === false) {
+      await onFlipSubmitFlag();
+    }
+    if (username.trim() !== '' && password.trim() !== '') setMessage('');
+    onSubmitForm();
+  };
 
-export default function LoginPage() {
   return (
     <LoginBox>
       <Helmet>
@@ -72,17 +74,30 @@ export default function LoginPage() {
         <meta name="description" content="Login Page" />
       </Helmet>
 
-      <Form>
+      <Form onSubmit={submitAndFlip}>
         <h1>
           <FormattedMessage {...messages.loginHeader} />
         </h1>
 
         <label>
-          <Input type="text" name="name" placeholder="Username" />
+          <Input
+            id="username"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={onChangeUsername}
+            s
+          />
         </label>
 
         <label>
-          <Input type="text" name="password" placeholder="Password" />
+          <Input
+            id="password"
+            type="text"
+            placeholder="Password"
+            value={password}
+            onChange={onChangePassword}
+          />
         </label>
 
         <input type="submit" value="login" />
@@ -100,6 +115,47 @@ export default function LoginPage() {
           </SignUpLink>
         </p>
       </div>
+      <ErrorMessage> {message} </ErrorMessage>
     </LoginBox>
   );
 }
+
+LoginPage.propTypes = {
+  // dispatch: PropTypes.func.isRequired,
+  username: PropTypes.string,
+  password: PropTypes.string,
+  submitFlag: PropTypes.bool,
+  onSubmitForm: PropTypes.func,
+  onChangeUsername: PropTypes.func,
+  onChangePassword: PropTypes.func,
+  onFlipSubmitFlag: PropTypes.func,
+};
+
+const mapStateToProps = createStructuredSelector({
+  // loginPage: makeSelectLoginPage(),
+  username: makeSelectUsername(),
+  password: makeSelectPassword(),
+  submitFlag: makeSelectSubmitFlag(),
+});
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onChangeUsername: evt => dispatch(changeUsername(evt.target.value)),
+    onChangePassword: evt => dispatch(changePassword(evt.target.value)),
+    onFlipSubmitFlag: () => dispatch(flipSubmitFlag()),
+    onSubmitForm: evt => {
+      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
+      dispatch(submitLoginReq());
+    },
+  };
+}
+
+const withConnect = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+);
+
+export default compose(
+  withConnect,
+  memo,
+)(LoginPage);
