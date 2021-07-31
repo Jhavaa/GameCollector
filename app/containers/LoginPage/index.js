@@ -29,12 +29,12 @@ import {
   submitLoginReq,
 } from './actions';
 
-import Button from './Button';
 import Form from './Form';
 import Input from './Input';
 import SignUpLink from './SignUpLink';
 // import LoginBox from './LoginBox';
 import ErrorMessage from '../RegisterPage/ErrorMessage';
+import RegisterButton from '../RegisterPage/RegisterButton';
 
 const LoginBox = styled.div``;
 
@@ -100,12 +100,12 @@ export function LoginPage({
           />
         </label>
 
-        <input type="submit" value="login" />
+        <RegisterButton type="submit" value="Login" />
       </Form>
 
-      <Button>
+      {/* <Button>
         <FormattedMessage {...messages.loginButton} />
-      </Button>
+      </Button> */}
 
       <div>
         <p>
