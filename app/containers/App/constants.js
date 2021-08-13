@@ -12,5 +12,3 @@
 export const LOAD_REPOS = 'boilerplate/App/LOAD_REPOS';
 export const LOAD_REPOS_SUCCESS = 'boilerplate/App/LOAD_REPOS_SUCCESS';
 export const LOAD_REPOS_ERROR = 'boilerplate/App/LOAD_REPOS_ERROR';
-export const LOAD_COVER_SUCCESS = 'boilerplate/App/LOAD_COVER_SUCCESS';
-export const LOAD_COVER_ERROR = 'boilerplate/App/LOAD_COVER_ERROR';

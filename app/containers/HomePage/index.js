@@ -22,9 +22,9 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { createStructuredSelector } from 'reselect';
-
 import { useInjectReducer } from 'utils/injectReducer';
 import { useInjectSaga } from 'utils/injectSaga';
+
 import {
   makeSelectRepos,
   makeSelectLoading,
@@ -32,29 +32,23 @@ import {
 } from 'containers/App/selectors';
 import H2 from 'components/H2';
 import ReposList from 'components/ReposList';
+import Showcase from 'components/Showcase';
+import { requestURLs, options } from 'utils/requestInfo';
+import { loadRepos } from '../App/actions';
+
 import AtPrefix from './AtPrefix';
 import CenteredSection from './CenteredSection';
 import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import messages from './messages';
-import { loadRepos } from '../App/actions';
+
 import { changeGameTitle } from './actions';
 import { makeSelectGameTitle } from './selectors';
 import reducer from './reducer';
 import saga from './saga';
 
 const key = 'home';
-
-// export const Input = styled.TextInput.attrs({
-//   placeholderTextColor: "red"
-// })`
-//   background-color: "#000";
-// `;
-
-// const data = {
-//   ulBack: 'background-color:#2EA620',
-// };
 
 export function HomePage({
   gameTitle,
@@ -89,6 +83,11 @@ export function HomePage({
       </Helmet>
       <div>
         <CenteredSection>
+          <Showcase
+            title="Popular"
+            fetchUrl={requestURLs.default}
+            options={options.popular}
+          />
           <H2>
             <FormattedMessage {...messages.startProjectHeader} />
           </H2>

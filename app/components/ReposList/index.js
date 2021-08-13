@@ -19,10 +19,8 @@ function ReposList({ loading, error, repos }) {
   }
 
   if (repos !== false) {
-    const data = {
-      ulBack: 'background-color:#2EA620',
-    };
-    return <List items={repos} component={RepoListItem} data={data}/>;
+    // console.log(repos)
+    return <List items={repos} component={RepoListItem} />;
   }
 
   return null;
