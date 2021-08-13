@@ -5,6 +5,7 @@ const Wrapper = styled.div`
   width: 40px;
   height: 40px;
   position: relative;
+  display: inline-flex;
 `;
 
 export default Wrapper;
