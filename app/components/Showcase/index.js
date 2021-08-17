@@ -6,16 +6,13 @@
 
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-// import styled from 'styled-components';
 
 import request from 'utils/request';
-// import List from 'components/List';
-// import ListItem from 'components/ListItem';
 import LoadingIndicator from 'components/LoadingIndicator';
-// import ShowcaseListItem from 'containers/ShowcaseListItem';
+import CoverArtRow from './CoverArtRow';
+import ShowcaseItem from './ShowcaseItem';
 
 function Showcase({ title, fetchUrl, options }) {
-  // const [coverURLs, setCoverURLs] = useState([])
   const [gameList, setGameList] = useState([]);
   const [combinedList, setCombinedList] = useState([]);
 
@@ -39,13 +36,16 @@ function Showcase({ title, fetchUrl, options }) {
         coverList.push(reqCovers[0]);
       }
 
-      // console.log(coverList)
+      // console.log(coverList);
       // setCoverURLs(coverList)
 
       let obj = {};
       for (let i = 0; i < reqGame.length; i += 1) {
         obj = {};
-        obj[reqGame[i].name] = coverList[i].url;
+        obj[reqGame[i].name] = coverList[i].url.replace(
+          't_thumb',
+          't_cover_big',
+        );
         resultList.push(obj);
       }
       // console.log(resultList)
@@ -56,12 +56,11 @@ function Showcase({ title, fetchUrl, options }) {
   }, [fetchUrl, options]);
 
   let content = gameList.map(game => (
-    // <img alt={game.name} key={`item-${game.id}`}/>
     <LoadingIndicator key={`item-${game.id}`} />
   ));
   if (combinedList[0] !== undefined || combinedList.length > 0) {
     content = gameList.map((game, index) => (
-      <img
+      <ShowcaseItem
         src={combinedList[index][game.name]}
         alt={game.name}
         key={`item-${game.id}`}
@@ -72,8 +71,9 @@ function Showcase({ title, fetchUrl, options }) {
   return (
     <div className="showcase">
       <h2>{title}</h2>
-
-      <div className="row__coverart">{content}</div>
+      {/* <a class="switchLeft sliderButton" ></a> */}
+      <CoverArtRow>{content}</CoverArtRow>
+      {/* <a class="switchRight sliderButton" ></a> */}
     </div>
   );
 }

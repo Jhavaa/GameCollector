@@ -9,6 +9,6 @@ export const options = {
       'Client-ID': '6llto5s67z1ag9f3p4gmbfchrph4jo',
       Authorization: 'Bearer l00lzsmqfzgr8o3g45qcr51sdnuudk',
     },
-    body: `fields name, rating, cover; where rating != null; sort rating asc;`,
+    body: `fields name, rating, cover; where rating != null; sort rating desc; limit 20;`,
   },
 };
