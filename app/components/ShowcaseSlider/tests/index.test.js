@@ -10,12 +10,12 @@ import React from 'react';
 import { render } from 'react-testing-library';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import Showcase from '../index';
+import ShowcaseSlider from '../index';
 
-describe('<Showcase />', () => {
+describe('<ShowcaseSlider />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<Showcase />);
+    render(<ShowcaseSlider />);
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +31,7 @@ describe('<Showcase />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<Showcase />);
+    } = render(<ShowcaseSlider />);
     expect(firstChild).toMatchSnapshot();
   });
 });

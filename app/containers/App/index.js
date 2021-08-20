@@ -29,7 +29,7 @@ const AppWrapper = styled.div`
   margin: 0 auto;
   display: flex;
   min-height: 100%;
-  //padding: 0 10px;
+  /* padding: 0 10px; */
   flex-direction: column;
 `;
 
@@ -51,7 +51,7 @@ export default function App() {
 
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
-      <AppWrapper>
+      <AppWrapper id="app-wrapper">
         <button onClick={themeToggler}>{textt}</button>
         <Helmet titleTemplate="%s - GameCollectr" defaultTitle="GameCollectr">
           <meta

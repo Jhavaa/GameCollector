@@ -32,8 +32,8 @@ import {
 } from 'containers/App/selectors';
 import H2 from 'components/H2';
 import ReposList from 'components/ReposList';
-import Showcase from 'components/Showcase';
 import { requestURLs, options } from 'utils/requestInfo';
+import ShowcaseSlider from '../../components/ShowcaseSlider';
 import { loadRepos } from '../App/actions';
 
 import AtPrefix from './AtPrefix';
@@ -83,7 +83,7 @@ export function HomePage({
       </Helmet>
       <div>
         <CenteredSection>
-          <Showcase
+          <ShowcaseSlider
             title="Popular"
             fetchUrl={requestURLs.default}
             options={options.popular}
